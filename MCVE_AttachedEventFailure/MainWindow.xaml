@@ -1,0 +1,30 @@
+﻿<Window x:Class="MCVE_AttachedEventFailure.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:l="clr-namespace:MCVE_AttachedEventFailure"
+        mc:Ignorable="d" Title="MainWindow" Height="450" Width="800"
+		xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter">
+			<EventTrigger.Actions>
+				<!--If I defined a storyboard to do a thing here, it would work.-->
+			</EventTrigger.Actions>
+		</EventTrigger>
+	</Window.Triggers>
+	<i:Interaction.Triggers>
+		<!--This will work-->
+		<i:EventTrigger EventName="MouseEnter">
+			<i:EventTrigger.Actions>
+				<i:InvokeCommandAction Command="{Binding TestCommand, Source={x:Static l:App.Current}}" />
+			</i:EventTrigger.Actions>
+		</i:EventTrigger>
+		<!--This will not work.-->
+		<i:EventTrigger EventName="Mouse.MouseEnter">
+			<i:EventTrigger.Actions>
+				<i:InvokeCommandAction Command="{Binding TestCommand, Source={x:Static l:App.Current}}" />
+			</i:EventTrigger.Actions>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+</Window>
